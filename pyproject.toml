@@ -6,6 +6,10 @@ authors = ["MarkParker5 <markparker.it@gmail.com>"]
 license = "MIT"
 readme = "README.md"
 packages = [{include = "rpi_reactive_gpio"}]
+homepage = "https://pypi.org/project/rpi-reactive-gpio/"
+repository = "https://github.com/MarkParker5/rpi-reactive-gpio"
+documentation = "https://github.com/MarkParker5/rpi-reactive-gpio/blob/main/README.md"
+keywords = ["raspberry-pi", "gpio", "reactive", "rxpy", "rx", "rpi", "rpi-gpio", "RPi.GPIO"]
 
 [tool.poetry.dependencies]
 python = "^3.10"
