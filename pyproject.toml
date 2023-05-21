@@ -11,6 +11,9 @@ packages = [{include = "rpi_reactive_gpio"}]
 python = "^3.10"
 "RPi.GPIO" = "^0.7.1"
 
+[tools.mypy]
+ignore_missing_imports = true
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
