@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import Callable
+from typing import Callable, Any
 import time
 import RPi.GPIO as GPIO
 
@@ -8,6 +8,8 @@ GPIO.setmode(GPIO.BOARD)
 GPIO.setwarnings(False)
     
 class ButtonClick:
+    
+    pass_args: list[Any] = []
     
     def __init__(self, pin: int, event_type: int = GPIO.FALLING, debounce_time_ms: int = 50, multiple_clicks_duration_ms: int = 300) -> None:
         self.pin = pin
@@ -19,7 +21,7 @@ class ButtonClick:
     
     # decorator
     def __call__(self, callback: Callable[[int], None]) -> Callable[[int], None]:
-        def event_handler(channel: int):
+        def event_handler(_):
             current_time = time.time()
 
             if self.num_clicks == 0:
@@ -30,7 +32,7 @@ class ButtonClick:
                 if time_elapsed <= self.multiple_clicks_duration_ms:
                     self.num_clicks += 1
                 else:
-                    callback(self.num_clicks)
+                    callback(*self.pass_args, self.num_clicks)
                     self.num_clicks = 0
 
             self.last_click_time = current_time

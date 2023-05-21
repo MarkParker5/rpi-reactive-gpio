@@ -2,6 +2,8 @@ import time
 import RPi.GPIO as GPIO
 
 
+# test all pins
+
 def test_all_pins():
     global managers
     pins: list[int] = []
@@ -25,8 +27,9 @@ def test_all_pins():
         GPIO.output(pin, GPIO.LOW)
 
 
-from rpi_reactive_gpio.leds import ButtonClick, LedManager, RGBLedManager, LedState, RGBLedState, main_loop
+from rpi_reactive_gpio import ButtonClick, LedManager, RGBLedManager, LedState, RGBLedState, main_loop
 
+# Global style
 
 led_mode = 0
 color_index = 0
@@ -78,3 +81,57 @@ def get_rgb_led_state() -> RGBLedState:
 if __name__ == '__main__':
     test_all_pins()
     main_loop()
+    
+# OOP style
+
+from rpi_reactive_gpio.scene import Scene
+
+
+class DefaultMenu(Scene):
+    
+    led_mode = 0
+    color_index = 0
+        
+    @ButtonClick(pin = 5)
+    def button_click(self, num_clicks: int):
+        if num_clicks == 1:
+            self.led_mode = int(not bool(self.led_mode))
+        elif num_clicks == 2:
+            self.led_mode = 2
+        elif num_clicks == 3:
+            self.led_mode = 3
+        else:
+            print(f'button2 clicked {num_clicks} times')
+        
+    @ButtonClick(pin = 5, debounce_time_ms = 2000)
+    def button_long_press(self, _):
+        self.color_index += 1
+        
+    @LedManager(pin = 29)
+    def get_led_state(self) -> LedState:
+        match self.led_mode:
+            case 0:
+                return LedState.off
+            case 1:
+                return LedState.on
+            case 2:
+                return LedState.blink
+            case 3:
+                return LedState.fast_blink
+
+    @RGBLedManager(red_pin = 33, green_pin = 35, blue_pin = 37)
+    def get_rgb_led_state(self) -> RGBLedState:
+        match self.color_index % 5:
+            case 0:
+                return RGBLedState.off
+            case 1:
+                return RGBLedState.red
+            case 2:
+                return RGBLedState.yellow
+            case 3:
+                return RGBLedState.green
+            case 4:
+                return RGBLedState.blue
+            
+if __name__ == '__main__':
+    Scene().main_loop()

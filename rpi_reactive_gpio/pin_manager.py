@@ -1,13 +1,14 @@
 from __future__ import annotations
-from typing import Callable, Protocol
+from typing import Callable, Protocol, runtime_checkable
 
 
+@runtime_checkable
 class PinManagerProtocol(Protocol):
     def tick(self, period: float = 1.0):
         '''period must be in range 0.0...1.0'''
         pass
     
-    def update(self):
+    def update(self, *args, **kwargs):
         pass
     
     def __call__(self, get_pin_state: Callable) -> PinManagerProtocol:

@@ -33,11 +33,11 @@ class LedManager:
             case LedState.fast_blink:
                 GPIO.output(self.pin, GPIO.LOW if period % 0.2 < 0.1 else GPIO.HIGH)
         
-    def update(self):
-        self._last_led_state = self._get_pin_state()
+    def update(self, *args, **kwargs):
+        self._last_led_state = self._get_pin_state(*args, **kwargs)
     
     # decorator
-    def __call__(self, get_pin_state: Callable[[], LedState]) -> LedManager:
+    def __call__(self, get_pin_state: Callable[..., LedState]) -> LedManager:
         global managers
         self._get_pin_state = get_pin_state
         managers.append(self)
@@ -94,7 +94,7 @@ class RGBLedManager:
         self._last_led_state = self._get_pin_state()      
           
     # decorator
-    def __call__(self, get_pin_state: Callable[[], RGBLedState]) -> RGBLedManager:
+    def __call__(self, get_pin_state: Callable[..., RGBLedState]) -> RGBLedManager:
         global managers
         self._get_pin_state = get_pin_state
         managers.append(self)
