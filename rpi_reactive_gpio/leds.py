@@ -2,7 +2,7 @@ from __future__ import annotations
 from enum import Enum
 from typing import Callable
 import RPi.GPIO as GPIO
-from pin_manager import all_tickable, managers
+from pin_manager import tickables, managers
 
 
 class LedState(Enum):
@@ -41,7 +41,7 @@ class LedManager:
         global managers
         self._get_pin_state = get_pin_state
         managers.append(self)
-        all_tickable.append(self)
+        tickables.append(self)
         return self
     
 class RGBLedState(Enum):

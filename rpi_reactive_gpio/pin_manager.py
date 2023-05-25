@@ -18,12 +18,12 @@ class PinManagerProtocol(Tickable):
         '''decorator for setting get_pin_state function that updates led state'''
         pass
 
-all_tickable: list[Tickable] = []
+tickables: list[Tickable] = []
 managers: list[PinManagerProtocol] = []
     
 def tick_all_managers(period: float = 1.0):
     '''period must be in range 0.0...1.0'''
-    for tickable in all_tickable:
+    for tickable in tickables:
         tickable.tick(period)
     
 def update_all_managers():

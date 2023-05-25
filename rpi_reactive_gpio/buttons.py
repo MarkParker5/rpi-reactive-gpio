@@ -2,7 +2,7 @@ from __future__ import annotations
 from typing import Callable, Any
 import time
 import RPi.GPIO as GPIO
-from pin_manager import all_tickable
+from pin_manager import tickables
 
     
 class ButtonClick:
@@ -44,5 +44,5 @@ class ButtonClick:
             bouncetime = self.debounce_time_ms
         )
         
-        all_tickable.append(self)
+        tickables.append(self)
         return event_handler
