@@ -4,6 +4,9 @@ import RPi.GPIO as GPIO
 from pin_manager import tick_all_managers, update_all_managers
 
 
+GPIO.setmode(GPIO.BOARD)
+GPIO.setwarnings(False)
+
 def main_loop(update_interval: float = 1.0, ticks_count: int = 100):
     while True:
         update_all_managers()

@@ -1,11 +1,10 @@
 import time
 import RPi.GPIO as GPIO
-
+from rpi_reactive_gpio import managers
 
 # test all pins
 
 def test_all_pins():
-    global managers
     pins: list[int] = []
     
     for manager in managers:
