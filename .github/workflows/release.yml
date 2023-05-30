@@ -40,7 +40,10 @@ jobs:
           echo VERSION="v$(poetry version --short)" >> $GITHUB_OUTPUT
 
       - name: Build distribution
-        run: poetry build
+        id: build
+        run: |
+          poetry build
+          echo FILE="$(ls dist/*.whl -U | head -1)" >> $GITHUB_OUTPUT
 
       - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
@@ -52,14 +55,20 @@ jobs:
         with:
           tag: ${{ steps.version.outputs.VERSION }}
 
+      - name: Generate changelog
+        id: changelog
+        run: |
+          changelog=$(git log --pretty=format:"- %s" "${{ steps.version.outputs.VERSION }}..HEAD")
+
       - name: Create GitHub Release
         id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
         with:
-          tag_name: v${{ steps.version.outputs.VERSION }}
-          release_name: Release v${{ steps.version.outputs.VERSION }}
+          tag_name: ${{ steps.version.outputs.VERSION }}
+          release_name: Release ${{ steps.version.outputs.VERSION }}
+          body: ${{ steps.changelog.outputs.changelog }}
           draft: false
           prerelease: false
 
@@ -69,6 +78,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./dist/*.whl
-          asset_name: my_project-${{ steps.version.outputs.VERSION }}.whl
+          asset_path: ${{ steps.build.outputs.FILE }}
+          asset_name: ${{ steps.build.outputs.FILE }}
           asset_content_type: application/zip
