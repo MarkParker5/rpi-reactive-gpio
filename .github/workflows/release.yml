@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+  workflow_dispatch:
 
 jobs:
   publish:
@@ -33,7 +34,9 @@ jobs:
             git config --global user.name "MarkParker5"
             git commit -m "Version bump v$(poetry version --short)"
             git push
+            echo Version bumped to $(poetry version --short)
           fi
+          echo Using version $(poetry version --short)
           echo VERSION="v$(poetry version --short)" >> $GITHUB_OUTPUT
 
       - name: Build distribution
@@ -43,6 +46,11 @@ jobs:
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
           password: ${{ secrets.PYPI_API_TOKEN }}
+
+      - name: Create tag
+        uses: rickstaa/action-create-tag@v1
+        with:
+          tag: ${{ steps.version.outputs.VERSION }}
 
       - name: Create GitHub Release
         id: create_release
