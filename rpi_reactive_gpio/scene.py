@@ -1,7 +1,7 @@
 import time
 from abc import ABC
-from pin_manager import PinManagerProtocol, Tickable
-from buttons import ButtonClick
+from .pin_manager import PinManagerProtocol, Tickable
+from .buttons import ButtonClick
 
 
 class Scene(ABC):

@@ -2,7 +2,7 @@ from __future__ import annotations
 from enum import Enum
 from typing import Callable
 import RPi.GPIO as GPIO
-from pin_manager import tickables, managers
+from .pin_manager import tickables, managers
 
 
 class LedState(Enum):

@@ -1,7 +1,7 @@
 import time
 import atexit
 import RPi.GPIO as GPIO
-from pin_manager import tick_all_managers, update_all_managers
+from .pin_manager import tick_all_managers, update_all_managers
 
 
 GPIO.setmode(GPIO.BOARD)

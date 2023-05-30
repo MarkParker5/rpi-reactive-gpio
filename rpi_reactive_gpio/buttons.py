@@ -1,9 +1,11 @@
 from __future__ import annotations
-from typing import Callable, Any
+from typing import Callable, Any, TypeVar
 import time
 import RPi.GPIO as GPIO
-from pin_manager import tickables
+from .pin_manager import tickables
 
+
+ButtonCallback = TypeVar('ButtonCallback', bound = Callable[[int], None] | Callable[['ButtonClick', int], None])
     
 class ButtonClick:
     
@@ -28,7 +30,7 @@ class ButtonClick:
                 self.num_clicks = 0
     
     # decorator
-    def __call__(self, callback: Callable[[int], None]) -> Callable[[int], None]:
+    def __call__(self, callback: ButtonCallback) -> ButtonClick:
         self.callback = callback
         
         def event_handler(_):
@@ -45,4 +47,4 @@ class ButtonClick:
         )
         
         tickables.append(self)
-        return event_handler
+        return self

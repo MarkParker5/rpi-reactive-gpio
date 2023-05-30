@@ -61,6 +61,7 @@ def get_led_state() -> LedState:
             return LedState.blink
         case 3:
             return LedState.fast_blink
+    return LedState.off
 
 @RGBLedManager(red_pin = 33, green_pin = 35, blue_pin = 37)
 def get_rgb_led_state() -> RGBLedState:
@@ -76,6 +77,7 @@ def get_rgb_led_state() -> RGBLedState:
             return RGBLedState.green
         case 4:
             return RGBLedState.blue
+    return RGBLedState.off
         
 if __name__ == '__main__':
     test_all_pins()
@@ -117,6 +119,7 @@ class DefaultMenu(Scene):
                 return LedState.blink
             case 3:
                 return LedState.fast_blink
+        return LedState.off
 
     @RGBLedManager(red_pin = 33, green_pin = 35, blue_pin = 37)
     def get_rgb_led_state(self) -> RGBLedState:
@@ -131,6 +134,7 @@ class DefaultMenu(Scene):
                 return RGBLedState.green
             case 4:
                 return RGBLedState.blue
+        return RGBLedState.off
             
 if __name__ == '__main__':
     Scene().main_loop()

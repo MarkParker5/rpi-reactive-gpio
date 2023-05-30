@@ -9,7 +9,7 @@ class Tickable(Protocol):
         pass
     
 @runtime_checkable
-class PinManagerProtocol(Tickable):
+class PinManagerProtocol(Tickable, Protocol):
     
     def update(self, *args, **kwargs):
         pass
