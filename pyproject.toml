@@ -13,7 +13,7 @@ keywords = ["raspberry-pi", "gpio", "reactive", "rxpy", "rx", "rpi", "rpi-gpio",
 
 [tool.poetry.dependencies]
 python = "^3.10"
-"RPi.GPIO" = "^0.7.1"
+raspi-gpio = "^0.1.0"
 
 [tools.mypy]
 ignore_missing_imports = true

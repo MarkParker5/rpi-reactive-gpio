@@ -1,7 +1,7 @@
 from __future__ import annotations
 from typing import Callable, Any, TypeVar
 import time
-import RPi.GPIO as GPIO
+from raspi_gpio import GPIO
 from .pin_manager import tickables
 
 

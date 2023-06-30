@@ -1,6 +1,6 @@
 import time
 import atexit
-import RPi.GPIO as GPIO
+from raspi_gpio import GPIO
 from .pin_manager import tick_all_managers, update_all_managers
 
 

@@ -1,5 +1,5 @@
 import time
-import RPi.GPIO as GPIO
+from raspi_gpio import GPIO
 from rpi_reactive_gpio import managers
 
 # test all pins
