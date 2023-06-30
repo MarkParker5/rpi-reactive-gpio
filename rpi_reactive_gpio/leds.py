@@ -91,8 +91,8 @@ class RGBLedManager:
                 GPIO.output(self.green_pin, GPIO.LOW)
                 GPIO.output(self.blue_pin, GPIO.HIGH)
               
-    def update(self):
-        self._last_led_state = self._get_pin_state()      
+    def update(self, *args, **kwargs):
+        self._last_led_state = self._get_pin_state(*args, **kwargs)
           
     # decorator
     def __call__(self, get_pin_state: Callable[..., RGBLedState]) -> RGBLedManager:
