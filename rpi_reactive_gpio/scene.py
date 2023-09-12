@@ -12,9 +12,9 @@ class Scene(ABC):
         self._is_running = True
         
         attributes = [getattr(self, a) for a in dir(self)]
-        self.managers = filter(lambda a: isinstance(a, PinManagerProtocol), attributes)
-        self.tickables = filter(lambda a: isinstance(a, Tickable), attributes)
-        self.events = filter(lambda a: isinstance(a, ButtonClick), attributes)
+        self.managers = list(filter(lambda a: isinstance(a, PinManagerProtocol), attributes))
+        self.tickables = list(filter(lambda a: isinstance(a, Tickable), attributes))
+        self.events = list(filter(lambda a: isinstance(a, ButtonClick), attributes))
         
         for event in self.events:
             event.pass_args = [self]

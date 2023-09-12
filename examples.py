@@ -79,16 +79,17 @@ def get_rgb_led_state() -> RGBLedState:
             return RGBLedState.blue
     return RGBLedState.off
         
-if __name__ == '__main__':
-    test_all_pins()
-    main_loop()
-    
+# if __name__ == '__main__':
+#     test_all_pins()
+#     main_loop()
+
+
 # OOP style
 
 from rpi_reactive_gpio.scene import Scene
 
 
-class DefaultMenu(Scene):
+class ExampleScene(Scene):
     
     led_mode = 0
     color_index = 0
@@ -137,4 +138,4 @@ class DefaultMenu(Scene):
         return RGBLedState.off
             
 if __name__ == '__main__':
-    Scene().main_loop()
+    ExampleScene().main_loop()
